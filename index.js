@@ -45,6 +45,12 @@ async function run() {
       const result = await dbJobs.insertOne(job);
       res.send(result);
     });
+
+    app.get("/applied", async (req, res) => {
+      const result = await dbapplied.find().toArray();
+      res.send(result);
+    });
+
     app.post("/applied", async (req, res) => {
       const job = req.body;
       const result = await dbapplied.insertOne(job);
