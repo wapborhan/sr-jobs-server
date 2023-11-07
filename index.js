@@ -46,6 +46,27 @@ async function run() {
       res.send(result);
     });
 
+    app.put("/jobs/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const options = { upsert: true };
+      const updateJob = req.body;
+      const newJob = {
+        $set: {
+          picture: updateJob.picture,
+          title: updateJob.title,
+          categories: updateJob.categories,
+          salary: updateJob.salary,
+          postingDate: updateJob.postingDate,
+          appnumber: updateJob.appnumber,
+          deadline: updateJob.deadline,
+          descriptoion: updateJob.descriptoion,
+        },
+      };
+      const result = await dbJobs.updateOne(filter, newJob, options);
+      res.send(result);
+    });
+
     app.get("/applied", async (req, res) => {
       const result = await dbapplied.find().toArray();
       res.send(result);
