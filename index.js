@@ -1,20 +1,16 @@
 const express = require("express");
 require("dotenv").config();
 const cors = require("cors");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const app = express();
 const port = process.env.PORT || 3300;
 
 // Middleware
-app.use(
-  cors({
-    origin: "",
-    credentials: true,
-  })
-);
+app.use(cors());
 app.use(express.json());
 
-const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
-const uri = `mongodb+srv://${process.env.DB_NAMEUSER}:${process.env.DB_PASSCODE}@cluster0.7dbji.mongodb.net/?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://srjobs:aoxOIWgdlHQjEE3g@cluster0.7dbji.mongodb.net/?retryWrites=true&w=majority`;
+// const uri = `mongodb+srv://${process.env.DB_NAMEUSER}:${process.env.DB_PASSCODE}@cluster0.7dbji.mongodb.net/?retryWrites=true&w=majority`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -34,7 +30,7 @@ async function run() {
     const dbapplied = client.db("jobsDB").collection("applied");
 
     app.get("/", async (req, res) => {
-      console.log("Server Start");
+      res.send("Server Start");
     });
 
     app.get("/jobs", async (req, res) => {
