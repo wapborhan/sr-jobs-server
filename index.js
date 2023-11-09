@@ -10,7 +10,7 @@ const port = process.env.PORT || 3300;
 // Middleware
 app.use(express.json());
 const corsOptions = {
-  origin: ["http://localhost:5173"],
+  origin: ["https://sr-jobs-2df84.web.app/"],
   credentials: true,
 };
 app.use(cors(corsOptions));
