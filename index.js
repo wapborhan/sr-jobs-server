@@ -9,9 +9,10 @@ const port = process.env.PORT || 3300;
 
 // Middleware
 app.use(express.json());
+
 const corsOptions = {
-  origin: ["https://sr-jobs-2df84.web.app/"],
-  credentials: true,
+  origin: ["https://sr-jobs-2df84.web.app", "http://sr-jobs-2df84.web.app"],
+  credentials: true, //access-control-allow-credentials:true
 };
 app.use(cors(corsOptions));
 
