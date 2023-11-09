@@ -106,10 +106,7 @@ async function run() {
       res.send(result);
     });
 
-    app.get("/myjobs", verifyToken, async (req, res) => {
-      if (req.query.email !== req.user.email) {
-        return res.status(403).send({ message: "Forbidden" });
-      }
+    app.get("/myjobs", async (req, res) => {
       let query = {};
       if (req.query?.email) {
         query = { email: req.query.email };
