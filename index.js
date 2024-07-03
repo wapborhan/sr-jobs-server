@@ -1,11 +1,14 @@
 const express = require("express");
 require("dotenv").config();
 const cors = require("cors");
+const path = require("path");
 var jwt = require("jsonwebtoken");
 const cookieparser = require("cookie-parser");
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const app = express();
 const port = process.env.PORT || 3300;
+
+app.use(express.static(path.join(__dirname, "public")));
 
 // Middleware
 app.use(express.json());
@@ -30,7 +33,10 @@ const client = new MongoClient(uri, {
     deprecationErrors: true,
   },
 });
-
+// Homepage
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "index.html"));
+});
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
@@ -38,10 +44,6 @@ async function run() {
 
     const dbJobs = client.db("jobsDB").collection("jobs");
     const dbapplied = client.db("jobsDB").collection("applied");
-
-    app.get("/", async (req, res) => {
-      res.send("Server Start");
-    });
 
     app.get("/jobs", async (req, res) => {
       const result = await dbJobs.find().toArray();
