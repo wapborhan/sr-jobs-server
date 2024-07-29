@@ -6,6 +6,8 @@ const CompanyScheema = new Schema(
     compName: { type: String },
     compNumber: { type: String },
     compEmail: { type: String },
+    compCategories: { type: String },
+    compWebsite: { type: String },
     compAdress: { type: String },
     compDetails: { type: String },
     social: { type: Object },
