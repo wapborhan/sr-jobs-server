@@ -1,10 +1,13 @@
+const mongoose = require("mongoose");
+const { ObjectId } = mongoose.Types;
 const asyncWrapper = require("../middlewares/async");
 const Jobs = require("../models/Jobs");
 
 const createJobs = asyncWrapper(async (req, res) => {
-  const job = req.body;
-  const result = await Jobs.insertOne(job);
-  res.send("Create result");
+  const jobData = req.body;
+  const create = new Jobs(jobData);
+  const result = await create.save();
+  res.send(result);
 });
 
 const getAllJobs = asyncWrapper(async (req, res) => {
@@ -16,7 +19,7 @@ const singleJob = asyncWrapper(async (req, res) => {
   const id = req.params.id;
   const query = { _id: new ObjectId(id) };
   const result = await Jobs.findOne(query);
-  res.send("result 1");
+  res.send(result);
 });
 
 const updateSingleJob = asyncWrapper(async (req, res) => {
