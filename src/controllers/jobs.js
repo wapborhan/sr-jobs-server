@@ -43,49 +43,22 @@ const updateSingleJob = asyncWrapper(async (req, res) => {
   res.send(result);
 });
 
-// app.get("/applied", async (req, res) => {
-//   //
-
-//   let query = {};
-//   if (req.query?.email) {
-//     query = { email: req.query.email };
-//   }
-//   const result = await dbapplied.find(query).toArray();
-//   res.send(result);
-// });
-
-// app.get("/applied/:id", async (req, res) => {
-//   const id = req.params.id;
-//   const query = { _id: new ObjectId(id) };
-//   const result = await dbapplied.findOne(query);
-//   res.send(result);
-// });
-
-// app.post("/applied", async (req, res) => {
-//   const job = req.body;
-//   const result = await dbapplied.insertOne(job);
-//   res.send(result);
-// });
-
-// app.get("/myjobs", async (req, res) => {
-//   let query = {};
-//   if (req.query?.email) {
-//     query = { email: req.query.email };
-//   }
-//   const result = await dbJobs.find(query).toArray();
-//   res.send(result);
-// });
-
-// app.delete("/myjobs/:id", async (req, res) => {
-//   const id = req.params.id;
-//   const query = { _id: new ObjectId(id) };
-//   const result = await dbJobs.deleteOne(query);
-//   res.send(result);
-// });
+const deleteJob = asyncWrapper(async (req, res) => {
+  try {
+    const id = req.params.id;
+    const query = { _id: new ObjectId(id) };
+    const result = await Jobs.findByIdAndDelete(query);
+    res.send(result);
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+});
 
 module.exports = {
   getAllJobs,
   singleJob,
   createJobs,
   updateSingleJob,
+  deleteJob,
 };
