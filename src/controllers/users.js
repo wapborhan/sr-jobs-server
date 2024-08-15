@@ -8,10 +8,15 @@ const getAllUsers = asyncWrapper(async (req, res) => {
 });
 
 const getSingleUser = asyncWrapper(async (req, res) => {
-  const { username } = req.params;
-  const filter = { username: username };
-  const result = await Users.findOne(filter);
-  res.status(200).json(result);
+  try {
+    const { email } = req.query;
+    const filter = { email: email };
+    const result = await Users.findOne(filter);
+    res.status(200).json(result);
+  } catch (error) {
+    console.error("Error creating user:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 });
 
 // Post Request

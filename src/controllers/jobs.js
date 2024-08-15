@@ -11,8 +11,31 @@ const createJobs = asyncWrapper(async (req, res) => {
 });
 
 const getAllJobs = asyncWrapper(async (req, res) => {
-  const result = await Jobs.find({});
-  res.send(result);
+  try {
+    const categories = req.query.cat;
+    const searchText = req.query.text;
+
+    if (categories === "all") {
+      const result = await Jobs.find({});
+
+      res.send(result);
+    } else {
+      let filter = {};
+
+      if (categories && categories !== "all") {
+        filter.categories = categories;
+      }
+
+      if (searchText) {
+        filter.title = { $regex: searchText, $options: "i" };
+      }
+
+      const result = await Jobs.find(filter);
+      res.send(result);
+    }
+  } catch (error) {
+    res.status(500).send({ error: "Something went wrong!" });
+  }
 });
 
 const singleJob = asyncWrapper(async (req, res) => {
