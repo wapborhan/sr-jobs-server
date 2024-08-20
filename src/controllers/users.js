@@ -9,9 +9,18 @@ const getAllUsers = asyncWrapper(async (req, res) => {
 
 const getSingleUser = asyncWrapper(async (req, res) => {
   try {
-    const { email } = req.query;
-    const filter = { email: email };
+    const { data } = req.query;
+
+    // Decode the Base64 email
+    const decodedEmail = Buffer.from(data, "base64").toString("utf-8");
+
+    const filter = { email: decodedEmail };
     const result = await Users.findOne(filter);
+
+    if (!result) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
     res.status(200).json(result);
   } catch (error) {
     console.error("Error creating user:", error);
@@ -47,21 +56,38 @@ const createUsers = asyncWrapper(async (req, res) => {
 });
 
 const editSingleUser = asyncWrapper(async (req, res) => {
-  const username = req.params.username;
-  const newLinks = req.body.links;
-  const newBio = req.body.bio;
-  const newAddress = req.body.address;
-
   try {
+    const { data } = req.query;
+    const userData = req.body;
+
+    // Decode the Base64 email
+    const decodedEmail = Buffer.from(data, "base64").toString("utf-8");
+    const filter = { email: decodedEmail };
+
+    updatedData = {
+      email: userData?.email,
+      name: userData?.name,
+      photoUrl: userData?.photoUrl,
+      accountType: userData?.accountType,
+      companyName: userData?.companyName,
+      address: userData?.address,
+      bio: userData?.bio,
+      socialLinks: {
+        facebook: userData?.socialLinks.facebook,
+        twitter: userData?.socialLinks.twitter,
+        linkedin: userData?.socialLinks.linkedin,
+        github: userData?.socialLinks.github,
+      },
+      userType: userData?.userType,
+    };
+
     // Find the user by username and update their links field
-    const updatedUser = await Users.findOneAndUpdate(
-      { username: username },
-      { links: newLinks, bio: newBio, address: newAddress }
-    );
+    const updatedUser = await Users.findOneAndUpdate(filter, updatedData, {
+      new: true, // Return the updated document
+    });
     if (!updatedUser) {
       return res.status(404).send({ message: "User not found" });
     }
-    // res.status(200).send(updatedUser);
     res.status(200).send({ message: "Profile Updated" });
   } catch (error) {
     res.status(500).send({ message: error.message });
