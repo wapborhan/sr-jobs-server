@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const { ObjectId } = mongoose.Types;
 const asyncWrapper = require("../middlewares/async");
 const Jobs = require("../models/Jobs");
+const Bookmark = require("../models/Bookmark");
 
 const createJobs = asyncWrapper(async (req, res) => {
   const jobData = req.body;
@@ -78,10 +79,23 @@ const deleteJob = asyncWrapper(async (req, res) => {
   }
 });
 
+const createBookmark = asyncWrapper(async (req, res) => {
+  try {
+    const bookmarkData = req.body;
+    const create = new Bookmark(bookmarkData);
+    const result = await create.save();
+    res.send(result);
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+});
+
 module.exports = {
   getAllJobs,
   singleJob,
   createJobs,
   updateSingleJob,
   deleteJob,
+  createBookmark,
 };

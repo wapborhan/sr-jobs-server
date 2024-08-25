@@ -15,9 +15,9 @@ app.use(express.static(path.join(__dirname, "public")));
 applyMiddlewares(app);
 
 //  All Routes
-app.use(user);
-app.use(jobs);
 app.use(company);
+app.use(jobs);
+app.use(user);
 
 // Homepage
 app.get("/", (req, res) => {
