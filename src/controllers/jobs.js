@@ -79,6 +79,20 @@ const deleteJob = asyncWrapper(async (req, res) => {
   }
 });
 
+const companyJobs = asyncWrapper(async (req, res) => {
+  try {
+    const { compId } = req.params;
+    const filter = { "companyInf._id": compId };
+
+    const result = await Jobs.find(filter);
+
+    res.send(result);
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+});
+
 const createBookmark = asyncWrapper(async (req, res) => {
   try {
     const bookmarkData = req.body;
@@ -98,4 +112,5 @@ module.exports = {
   updateSingleJob,
   deleteJob,
   createBookmark,
+  companyJobs,
 };
