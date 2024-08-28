@@ -105,6 +105,18 @@ const createBookmark = asyncWrapper(async (req, res) => {
   }
 });
 
+const myJobs = asyncWrapper(async (req, res) => {
+  try {
+    const email = req.query.email;
+    const filter = { userEmail: email };
+    const result = await Jobs.find(filter);
+    res.send(result);
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+});
+
 module.exports = {
   getAllJobs,
   singleJob,
@@ -113,4 +125,5 @@ module.exports = {
   deleteJob,
   createBookmark,
   companyJobs,
+  myJobs,
 };

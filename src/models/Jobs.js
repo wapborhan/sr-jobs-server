@@ -7,6 +7,7 @@ const JobsSchema = new Schema(
       compName: { type: String },
       compLogoUrl: { type: String },
     },
+    userEmail: { type: String, required: true },
     postedDate: { type: String, required: true },
 
     title: { type: String, required: true },
