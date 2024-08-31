@@ -51,16 +51,20 @@ const updateSingleJob = asyncWrapper(async (req, res) => {
   const filter = { _id: new ObjectId(id) };
   const options = { upsert: true };
   const updateJob = req.body;
+
   const newJob = {
     $set: {
-      picture: updateJob.picture,
-      title: updateJob.title,
-      categories: updateJob.categories,
-      salary: updateJob.salary,
-      postingDate: updateJob.postingDate,
-      appnumber: updateJob.appnumber,
-      deadline: updateJob.deadline,
-      descriptoion: updateJob.descriptoion,
+      title: updateJob?.title,
+      categories: updateJob?.categories,
+      workplaceType: updateJob?.workplaceType,
+      jobType: updateJob?.jobType,
+      experience: updateJob?.experience,
+      gender: updateJob?.gender,
+      location: updateJob?.location,
+      salaryRange: updateJob?.salaryRange,
+      deadline: updateJob?.deadline,
+      skillsAbilities: updateJob?.skillsAbilities,
+      jobsDescription: updateJob?.jobsDescriptions,
     },
   };
   const result = await Jobs.updateOne(filter, newJob, options);

@@ -7,21 +7,26 @@ const JobsSchema = new Schema(
       compName: { type: String },
       compLogoUrl: { type: String },
     },
-    userEmail: { type: String, required: true },
-    postedDate: { type: String, required: true },
+    userEmail: {
+      type: String,
+      required: function () {
+        return this.isNew;
+      },
+    },
+    postedDate: { type: String },
 
-    title: { type: String, required: true },
-    categories: { type: String, required: true },
+    title: { type: String },
+    categories: { type: String },
 
-    workplaceType: { type: String, required: true },
-    jobType: { type: String, required: true },
+    workplaceType: { type: String },
+    jobType: { type: String },
     experience: { type: String },
-    gender: { type: String, required: true },
+    gender: { type: String },
 
-    location: { type: String, required: true },
-    salaryRange: { type: String, required: true },
+    location: { type: String },
+    salaryRange: { type: String },
 
-    deadline: { type: String, required: true },
+    deadline: { type: String },
     skillsAbilities: { type: Array },
 
     jobsDescription: { type: String },
