@@ -13,7 +13,7 @@ const JobsSchema = new Schema(
         return this.isNew;
       },
     },
-    postedDate: { type: String },
+    postedDate: { type: Date },
 
     title: { type: String },
     categories: { type: String },
@@ -26,7 +26,7 @@ const JobsSchema = new Schema(
     location: { type: String },
     salaryRange: { type: String },
 
-    deadline: { type: String },
+    deadline: { type: Date },
     skillsAbilities: { type: Array },
 
     jobsDescription: { type: String },

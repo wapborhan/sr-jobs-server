@@ -1,7 +1,7 @@
 const express = require("express");
+require("dotenv").config();
 const app = express();
 const path = require("path");
-require("dotenv").config();
 const notFound = require("./middlewares/not-found");
 const applyMiddlewares = require("./middlewares");
 const user = require("./routes/user");
