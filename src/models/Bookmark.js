@@ -1,10 +1,20 @@
-const { model, Schema } = require("mongoose");
+const { model, Schema, mongoose } = require("mongoose");
 
 const BookmarkScheema = new Schema(
   {
-    jobId: { type: String },
-    userEmail: { type: String },
-    markDate: { type: Date },
+    jobId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "jobs",
+      required: true,
+    },
+    bookmarkerEmail: {
+      type: String,
+      required: true,
+    },
+    markDate: {
+      type: Date,
+      default: Date.now,
+    },
   },
   {
     versionKey: false,
