@@ -6,12 +6,14 @@ const {
   createJobs,
   updateSingleJob,
   deleteJob,
-  createBookmark,
   companyJobs,
   myJobs,
+} = require("../controllers/jobs");
+const {
+  createBookmark,
   allBookmark,
   deleteBookmark,
-} = require("../controllers/jobs");
+} = require("../controllers/bookmark");
 
 router.route("/jobs").get(getAllJobs).post(createJobs).get(myJobs);
 router.route("/my-jobs").get(myJobs);
