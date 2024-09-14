@@ -25,7 +25,6 @@ const createApplyJob = asyncWrapper(async (req, res) => {
 const allJobApllication = asyncWrapper(async (req, res, next) => {
   const { id } = req.query;
   let result;
-
   try {
     if (id === "all") {
       result = await Apply.find({}).populate("applierInf").populate("jobInf");
